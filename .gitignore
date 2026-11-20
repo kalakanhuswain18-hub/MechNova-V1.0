@@ -34,3 +34,19 @@ frontend/dist/
 # OS
 .DS_Store
 Thumbs.db
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# Generated datasets
+ml/data/ingested/
+ml/data/processed/
+
+# Logs
+logs/
