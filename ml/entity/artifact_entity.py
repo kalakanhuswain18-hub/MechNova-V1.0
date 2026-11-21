@@ -13,3 +13,9 @@ class DataIngestionArtifact:
 class DataValidationArtifact:
     validation_status: bool
     validation_report_path: str
+
+@dataclass
+class ModelTrainerArtifact:
+    best_model_name: str
+    best_model_path: str
+    best_model_metrics: dict
