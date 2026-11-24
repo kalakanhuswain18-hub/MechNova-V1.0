@@ -1,0 +1,6 @@
+{
+    "schema_validation": "PASSED",
+    "missing_values_validation": "PASSED",
+    "duplicate_validation": "PASSED",
+    "data_type_validation": "PASSED"
+}

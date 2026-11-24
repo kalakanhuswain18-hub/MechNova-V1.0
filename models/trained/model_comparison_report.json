@@ -1,0 +1,31 @@
+{
+    "project": "MechNova V1.0",
+    "dataset": "NASA C-MAPSS FD001",
+    "validation_results": {
+        "RandomForest": {
+            "MAE": 10.893201474201474,
+            "RMSE": 16.0188498967542,
+            "NASA_Score": 24399.35687760373
+        },
+        "XGBoost": {
+            "MAE": 10.770272254943848,
+            "RMSE": 15.82383496664945,
+            "NASA_Score": 23695.744718915903
+        }
+    },
+    "test_results": {
+        "RandomForest": {
+            "MAE": 13.497299999999997,
+            "RMSE": 17.860417324351634,
+            "NASA_Score": 512.781737309311
+        },
+        "XGBoost": {
+            "MAE": 13.741565704345703,
+            "RMSE": 18.207537018962093,
+            "NASA_Score": 554.328233808639
+        }
+    },
+    "selected_model": "XGBoost",
+    "selection_basis": "Validation performance",
+    "test_observation": "Random Forest performed slightly better on the independent test set."
+}
