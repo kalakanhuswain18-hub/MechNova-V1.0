@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 import pandas as pd
 from sqlalchemy import text
+from fastapi.middleware.cors import CORSMiddleware
 
 # Locate project root from backend/main.py
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +28,16 @@ app = FastAPI(
     title="MechNova V1.0",
     description="Industrial Predictive Maintenance AI Platform",
     version="1.0.0"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 def get_health_status(predicted_rul: float):
 
@@ -485,4 +496,45 @@ def system_health(db: Session = Depends(get_db)):
         "backend": "Online",
         "database": database_status,
         "ml_model": ml_model_status
+    }
+
+@app.get("/api/v1/machines")
+def get_all_machines(db: Session = Depends(get_db)):
+
+    # Get latest prediction ID for every unique machine
+    latest_predictions = (
+        db.query(
+            func.max(MachinePrediction.id).label("latest_id")
+        )
+        .group_by(MachinePrediction.unit)
+        .subquery()
+    )
+
+    # Fetch only latest prediction of each machine
+    machines = (
+        db.query(MachinePrediction)
+        .join(
+            latest_predictions,
+            MachinePrediction.id == latest_predictions.c.latest_id
+        )
+        .order_by(MachinePrediction.unit.asc())
+        .all()
+    )
+
+    return {
+        "total_machines": len(machines),
+        "machines": [
+            {
+                "id": machine.id,
+                "unit": machine.unit,
+                "last_cycle": machine.last_cycle,
+                "predicted_rul": round(machine.predicted_rul, 2),
+                "health_status": get_health_status(
+                    machine.predicted_rul
+                ),
+                "model_name": machine.model_name,
+                "created_at": machine.created_at
+            }
+            for machine in machines
+        ]
     }

@@ -4,49 +4,54 @@ __pycache__/
 *.py[cod]
 *.pyo
 
-# Virtual Environment
+# Virtual Environments
 .venv/
 venv/
 env/
 
-# Environment Variables
+# Environment Variables and Secrets
 .env
 .env.*
+!.env.example
 
 # Jupyter
 .ipynb_checkpoints/
 
-# ML Experiments
+# MLflow
 mlruns/
-*.log
+mlflow.db
+mlflow.db-shm
+mlflow.db-wal
+mlartifacts/
+mlruns_backup/
 
-# Model artifacts (large files)
+# Model Cache and Downloads
+models/mlflow_cache/
+ml/notebooks/mlflow_model_download/
+
+# Large Model Artifacts
 *.pkl
 *.joblib
 
-# Node
+# Generated Datasets
+ml/data/ingested/
+ml/data/processed/
+
+# Node / React
 node_modules/
+frontend/node_modules/
 frontend/dist/
+frontend/.env
+frontend/.env.*
+
+# Logs
+*.log
+logs/
 
 # IDE
 .vscode/
+.idea/
 
 # OS
 .DS_Store
 Thumbs.db
-# Python
-__pycache__/
-*.py[cod]
-
-# Virtual environment
-.venv/
-
-# Environment variables
-.env
-
-# Generated datasets
-ml/data/ingested/
-ml/data/processed/
-
-# Logs
-logs/
